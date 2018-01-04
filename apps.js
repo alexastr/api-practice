@@ -4,7 +4,7 @@ var youtube_search_url = 'https://www.googleapis.com/youtube/v3/search'
 var result_html_template = (
 	'<div>' + '<a class="js-result-name" href=""></a>' + '</div>' +
 	'<div>' + '<a class="js-channel-name" href=""></a>' + '</div>' +
-	'<div>' + '<img src="">' + '</div>')
+	'<div>' + '<a class="js-thumbnail" href=""><img src="" data-lightbox="current-image"></a>' + '</div>')
 
 //function to get data from API
 function getDataFromAPI(searchTerm,callback) {
@@ -33,8 +33,8 @@ function displaySearchData(data) {
 //function to make search results clickable
 function renderResult(result) {
 	let template = $(result_html_template)
-	template.find('.js-result-name').text(result.snippet.title).attr('href','http://www.youtube.com/watch?v=' + result.snippet.id)
-	console.log(result.snippet.id)
+	template.find('.js-result-name').text(result.snippet.title).attr('href','http://www.youtube.com/watch?v=' + result.id.videoId)
+	template.find('.js-thumbnail').attr('href','http://www.youtube.com/watch?v=' + result.id.videoId)
 	template.find('.js-channel-name').text(result.snippet.channelTitle).attr('href','http://www.youtube.com/channel/' + result.snippet.channelId)
 	template.find('img').attr('src',result.snippet.thumbnails.medium.url)
 	return template
